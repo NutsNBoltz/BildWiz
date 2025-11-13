@@ -1,57 +1,42 @@
-package com.example.bildwiz;
+package com.example.bildwiz.controllers;
 
-import javafx.application.Platform;
+import com.example.bildwiz.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
 import javafx.stage.Stage;
 
 
 import java.awt.Desktop;
-import java.net.URI;
-import java.net.URL;
-
-
 import java.io.IOException;
+import java.net.URI;
+
 
 import static javafx.application.Application.launch;
 
-public class HelloController {
+public class WelcomeController {
 
-    boolean isOn = false;
 
     @FXML
     private Label welcomeText;
 
     @FXML
-    private Button helloButton;
+    private Button startButton;
 
     @FXML
-    protected void onHelloButtonClick(){
+    protected void onStartButtonClick() throws IOException {
 
-        if(!isOn){
-            welcomeText.setText("Welcome to JavaFX Application!");
-            helloButton.setText("Bye");
-            isOn = true;
-        } else {
-            welcomeText.setText("Unwelcome to JavaFX Application!");
-            helloButton.setText("Hello");
-            isOn = false;
-        }
+        Stage stage = (Stage)  startButton.getScene().getWindow();
 
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("fxml/dashboard.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Hello! World!");
+        stage.setScene(scene);
+        stage.show();
 
     }
-
-
-
-
-
 
 
     @FXML

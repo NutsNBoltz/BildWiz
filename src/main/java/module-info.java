@@ -14,4 +14,6 @@ module com.example.bildwiz {
 
     opens com.example.bildwiz to javafx.fxml;
     exports com.example.bildwiz;
+    exports com.example.bildwiz.controllers;
+    opens com.example.bildwiz.controllers to javafx.fxml;
 }
