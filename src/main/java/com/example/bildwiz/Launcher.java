@@ -8,4 +8,6 @@ public class Launcher {
         Application.launch(Main.class, args);
     }
 
+    //TODO try to combine Launcher.java and Main.java into 1 file
+
 }
