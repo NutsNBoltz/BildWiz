@@ -11,6 +11,7 @@ module com.example.bildwiz {
     requires eu.hansolo.tilesfx;
     requires javafx.graphics;
     requires java.desktop;
+    requires java.smartcardio;
 
     opens com.example.bildwiz to javafx.fxml;
     exports com.example.bildwiz;

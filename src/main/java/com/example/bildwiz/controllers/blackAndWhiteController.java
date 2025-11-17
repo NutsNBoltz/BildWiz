@@ -1,6 +1,6 @@
 package com.example.bildwiz.controllers;
 
-public class GrayscaleController {
+public class blackAndWhiteController {
 
     //TODO make interface
 

@@ -6,7 +6,7 @@
 
 <ScrollPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bildwiz.controllers.DashboardController">
    <content>
-      <FlowPane fx:id="cardsContainer" prefHeight="863.0" prefWidth="784.0">
+      <FlowPane fx:id="cardsContainer" prefHeight="900.0" prefWidth="800.0">
       </FlowPane>
    </content>
 </ScrollPane>

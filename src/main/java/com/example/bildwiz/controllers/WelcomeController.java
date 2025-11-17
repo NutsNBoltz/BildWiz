@@ -35,6 +35,7 @@ public class WelcomeController {
 
 
 
+
     @FXML
     protected void onStartButtonClick() throws IOException {
 
