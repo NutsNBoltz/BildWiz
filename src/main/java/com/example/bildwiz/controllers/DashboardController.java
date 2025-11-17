@@ -27,48 +27,48 @@ public class DashboardController {
 
     Card card1 = new Card("Monochrome",
             "A filter, which transforms your colorful image to Black & White",
-            null,
-            "/fxml/blackAndWhite.fxml");
+            "blackAndWhite.jpeg",
+            "blackAndWhite.fxml");
 
     Card card2 = new Card(
             "Pop Art Filter",
             "A filter which transforms your picture pop art filter",
-            null,
-            "/fxml/popArt.fxml");
+            "blackAndWhite.jpeg",
+            "popArt.fxml");
 
     Card card3 = new Card(
             "ASCII",
             "A Filter which transforms your image into ASCII Art",
-            null,
-            "/fxml/ascii.fxml"
+            "blackAndWhite.jpeg",
+            "ascii.fxml"
     );
 
     Card card4 = new Card(
             "Photomosaic",
             "A Filter which transforms your image into tiles of other smaller images",
-            null,
-            "/fxml/photomosaic.fxml"
+            "blackAndWhite.jpeg",
+            "photomosaic.fxml"
     );
 
     Card card5 = new Card(
             "Voronoi",
             "A filter which applies the Voronoi effect to the image",
-            null,
-            "/fxml/voronoi.fxml"
+            "blackAndWhite.jpeg",
+            "voronoi.fxml"
     );
 
     Card card6 = new Card(
             "Dithering",
             "A Filter which transforms your image into ASCII Art",
-            null,
-            "/fxml/dithering.fxml"
+            "blackAndWhite.jpeg",
+            "dithering.fxml"
     );
 
     Card card7 = new Card(
             "ASCII",
             "A Filter which transforms your image into ASCII Art",
-            null,
-            "/fxml/ascii.fxml"
+            "blackAndWhite.jpeg",
+            "ascii.fxml"
     );
 
     public void initialize(){
@@ -91,7 +91,7 @@ public class DashboardController {
         @FXML private Label filterName;
         @FXML private Label filterDescription;
 
-        public Card(String name, String description, Image image, String targetFXML) {
+        public Card(String name, String description, String imagePath, String targetFXML) {
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/bildwiz/fxml/filterCard.fxml"));
 
@@ -104,21 +104,26 @@ public class DashboardController {
                 e.printStackTrace();
             }
 
-            init(name, description, image, targetFXML);
+            init(name, description, imagePath, targetFXML);
         }
 
 
 
-        private void init(String name, String description, Image image, String targetFXML) {
+        private void init(String name, String description, String imagePath, String targetFXML) {
 
             filterName.setText(name);
-            imageView.setImage(image);
+
             filterDescription.setText(description);
-            filterDescription.setOpacity(0); //This makes it transparent originally.
+            filterDescription.setOpacity(0); //This makes the description transparent originally.
+
+
+            Image image = new Image(getClass().getResourceAsStream("/com/example/bildwiz/images/" + imagePath));
+            imageView.setImage(image);
+
 
             this.setOnMouseEntered(e ->{
-                this.setScaleX(1.05);
-                this.setScaleY(1.05);
+                this.setScaleX(1.15);
+                this.setScaleY(1.15);
                 FadeTransition fadeOut = new FadeTransition(Duration.millis(200), filterDescription);
                 fadeOut.setToValue(1);
                 fadeOut.play();
@@ -135,7 +140,8 @@ public class DashboardController {
 
             this.setOnMouseClicked(e -> {
                 try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(targetFXML));
+
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/bildwiz/fxml/" + targetFXML));
                     Stage stage = (Stage) this.getScene().getWindow();
 
                     Parent filterUI = fxmlLoader.load();

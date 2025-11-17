@@ -1,4 +1,4 @@
-package com.example.bildwiz.controllers;
+package com.example.bildwiz.controllers.filters;
 
 public class VoronoiController {
 
