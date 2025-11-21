@@ -71,6 +71,13 @@ public class DashboardController {
             "ascii.fxml"
     );
 
+    Card card8 = new Card(
+            "Testing",
+            "Testing Canvas, to make sure it is functioning as intended.",
+            "blackAndWhite.jpeg",
+            "canvas.fxml"
+    );
+
     public void initialize(){
         cardsContainer.getChildren().add(card1);
         cardsContainer.getChildren().add(card2);
@@ -79,6 +86,7 @@ public class DashboardController {
         cardsContainer.getChildren().add(card5);
         cardsContainer.getChildren().add(card6);
         cardsContainer.getChildren().add(card7);
+        cardsContainer.getChildren().add(card8);
 
     }
 

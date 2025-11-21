@@ -42,6 +42,7 @@ public class WelcomeController {
         Stage stage = (Stage)  startButton.getScene().getWindow();
 
 
+        //to be shifted to CanvasController, mechanism for selecting an image from computer.
 //        FileChooser fileChooser = new FileChooser();
 //        fileChooser.setTitle("Choose Image");
 //        File file = fileChooser.showOpenDialog(stage);
