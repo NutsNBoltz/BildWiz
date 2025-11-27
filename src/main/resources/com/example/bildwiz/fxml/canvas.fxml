@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.TextField?>
-<AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bildwiz.controllers.CanvasController">
-
-
-    <Button fx:id="selectImageButton" layoutX="452.0" layoutY="286.0" onAction="#OnSelectImageButtonClick" prefHeight="29.0" prefWidth="176.0" text="Select Image" />
+<AnchorPane fx:id="root" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bildwiz.controllers.CanvasController">
 
 
     
     <ImageView fx:id="selectedImage" fitHeight="644.0" fitWidth="831.0" layoutX="28.0" layoutY="38.0">
     </ImageView>
+   <VBox fx:id="rightPanel" layoutX="771.0" layoutY="38.0" prefHeight="659.0" prefWidth="281.0"  style="-fx-background-color: #000000"/>
+
+
+    <Button fx:id="selectImageButton" layoutX="272.0" layoutY="286.0" onAction="#OnSelectImageButtonClick" prefHeight="17.0" prefWidth="205.0" text="Select Image" />
 
 
     <Button fx:id="changeImageButton" layoutX="879.0" layoutY="38.0" onAction="#OnChangeImageButtonClick" prefHeight="48.0" prefWidth="168.0" text="Change Image" visible="false" />
-    <TextField fx:id="imageURL" layoutX="40.0" layoutY="320.0" prefHeight="48.0" prefWidth="1000.0"/>
+    <TextField fx:id="imageURL" layoutX="40.0" layoutY="320.0" prefHeight="48.0" prefWidth="716.0" />
 
 
     <Button fx:id="saveImageButton" layoutX="879.0" layoutY="650.0" onAction="#OnSaveImageButtonClick" prefHeight="48.0" prefWidth="168.0" text="Save Image" visible="false" />
+
+    <Button fx:id="backButton" layoutX="28.0" layoutY="25.0" onAction="#OnBackButtonClick" text="Back to Dashboard" />
 
 </AnchorPane>

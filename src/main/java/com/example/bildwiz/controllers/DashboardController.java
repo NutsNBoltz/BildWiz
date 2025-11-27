@@ -149,10 +149,13 @@ public class DashboardController {
             this.setOnMouseClicked(e -> {
                 try {
 
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/bildwiz/fxml/" + targetFXML));
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/bildwiz/fxml/canvas.fxml"));
                     Stage stage = (Stage) this.getScene().getWindow();
 
                     Parent filterUI = fxmlLoader.load();
+
+                    CanvasController canvasController = fxmlLoader.getController();
+                    canvasController.openFilter("/com/example/bildwiz/fxml/" + targetFXML);
 
                     stage.setScene(new Scene(filterUI));
 

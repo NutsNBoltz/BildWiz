@@ -1,6 +1,14 @@
 package com.example.bildwiz.controllers.filters;
 
-public class PopArtController {
+import com.example.bildwiz.controllers.CanvasController;
+
+public class PopArtController extends CanvasController {
+
+    protected CanvasController parent;
+
+    public void setParent(CanvasController parent) {
+        this.parent = parent;
+    }
 
     //TODO make interface
 

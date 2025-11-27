@@ -1,11 +1,18 @@
 package com.example.bildwiz.controllers;
 
+import com.example.bildwiz.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -19,7 +26,7 @@ import java.net.URL;
 
 public class CanvasController {
 
-
+    @FXML AnchorPane root;
     @FXML TextField imageURL;
     @FXML ImageView selectedImage;
     @FXML Button selectImageButton;
@@ -31,6 +38,35 @@ public class CanvasController {
         imageURL.textProperty().addListener((obs, oldVal, newVal) -> {
             LoadImageFromURL(newVal, selectedImage);
         });
+
+
+        selectedImage.setOnScroll(event -> {
+            double zoom = 1.05;
+
+            if (event.getDeltaY() < 0) {zoom = 1/zoom;}
+
+            selectedImage.setScaleX(selectedImage.getScaleX() * zoom);
+            selectedImage.setScaleY(selectedImage.getScaleY() * zoom);
+        });
+
+        final double[] offset = new double[2];
+
+        selectedImage.setOnMousePressed(event -> {
+            offset[0] = event.getSceneX() - selectedImage.getLayoutX();
+            offset[1] = event.getSceneY() - selectedImage.getLayoutY();
+        });
+
+        selectedImage.setOnMouseDragged(event -> {
+            selectedImage.setLayoutX(event.getSceneX() - offset[0]);
+            selectedImage.setLayoutY(event.getSceneY() - offset[1]);
+        });
+
+        Group group = new Group(selectedImage);
+        root.getChildren().add(group);
+
+
+
+
     }
 
 
@@ -69,6 +105,10 @@ public class CanvasController {
 
                 Image image = new Image(uri.toString(), true);
                 imageView.setImage(image);
+                imageURL.setVisible(false);
+                changeImageButton.setVisible(true);
+                saveImageButton.setVisible(true);
+                selectImageButton.setVisible(false);
             } else {
                 System.out.println("Not a valid image URL");
             }
@@ -96,6 +136,7 @@ public class CanvasController {
 
             changeImageButton.setVisible(true);
             saveImageButton.setVisible(true);
+            imageURL.setVisible(false);
         }
     }
 
@@ -106,6 +147,52 @@ public class CanvasController {
 
 
     @FXML
-    public void OnSaveImageButtonClick() {}
+    public void OnSaveImageButtonClick() {
+
+    }
+
+    @FXML
+    public void OnBackButtonClick() throws IOException {
+        Stage stage = (Stage) selectImageButton.getScene().getWindow();
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("fxml/dashboard.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Hello! World!");
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
+
+    }
+
+
+
+    @FXML VBox rightPanel;
+
+    public void openFilter(String fxmlPath) {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Node ui = loader.load();
+
+            rightPanel.getChildren().clear();
+            rightPanel.getChildren().add(ui);
+
+
+            Object controller = loader.getController();
+
+            try {
+                controller.getClass().getMethod("setParent", CanvasController.class).invoke(controller, this);
+
+            } catch (NoSuchMethodException ignored) {
+                //ignore
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 
 }
