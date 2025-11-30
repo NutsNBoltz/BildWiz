@@ -10,4 +10,6 @@ public class PhotomosaicController extends CanvasController {
         this.parent = parent;
     }
 
+    public void initialize() {}
+
 }

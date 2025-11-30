@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.net.URL;
 
 
 public class DashboardController {
@@ -28,7 +27,12 @@ public class DashboardController {
     Card card1 = new Card("Monochrome",
             "A filter, which transforms your colorful image to Black & White",
             "blackAndWhite.jpeg",
-            "blackAndWhite.fxml");
+            "grayscale.fxml");
+
+    Card card12 = new Card("Blur",
+            "A filter, which will blur the image",
+            "blackAndWhite.jpeg",
+            "blur.fxml");
 
     Card card2 = new Card(
             "Pop Art Filter",
@@ -80,6 +84,7 @@ public class DashboardController {
 
     public void initialize(){
         cardsContainer.getChildren().add(card1);
+        cardsContainer.getChildren().add(card12);
         cardsContainer.getChildren().add(card2);
         cardsContainer.getChildren().add(card3);
         cardsContainer.getChildren().add(card4);
@@ -149,15 +154,16 @@ public class DashboardController {
             this.setOnMouseClicked(e -> {
                 try {
 
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/bildwiz/fxml/canvas.fxml"));
+                    FXMLLoader canvasLoader = new FXMLLoader(getClass().getResource("/com/example/bildwiz/fxml/canvas.fxml"));
+                    Parent canvasParent = canvasLoader.load();
+
+                    CanvasController canvas = canvasLoader.getController();
+
+
+                    canvas.openFilter(targetFXML);
+
                     Stage stage = (Stage) this.getScene().getWindow();
-
-                    Parent filterUI = fxmlLoader.load();
-
-                    CanvasController canvasController = fxmlLoader.getController();
-                    canvasController.openFilter("/com/example/bildwiz/fxml/" + targetFXML);
-
-                    stage.setScene(new Scene(filterUI));
+                    stage.setScene(new Scene(canvasParent));
 
                 } catch (Exception ex) {
                     ex.printStackTrace();

@@ -12,6 +12,7 @@ module com.example.bildwiz {
     requires javafx.graphics;
     requires java.desktop;
     requires java.smartcardio;
+    requires javafx.swing;
 
     opens com.example.bildwiz to javafx.fxml;
     exports com.example.bildwiz;

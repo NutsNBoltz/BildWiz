@@ -8,6 +8,6 @@
 
 <VBox xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.bildwiz.controllers.filters.blackAndWhiteController">
+            fx:controller="com.example.bildwiz.controllers.filters.GrayscaleController">
 
 </VBox>
