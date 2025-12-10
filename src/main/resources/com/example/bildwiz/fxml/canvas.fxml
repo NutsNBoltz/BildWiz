@@ -69,7 +69,12 @@
                <VBox.margin>
                   <Insets top="30.0" />
                </VBox.margin></VBox>
-                <Button fx:id="saveImageButton" layoutX="879.0" layoutY="650.0" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#OnSaveImageButtonClick" prefHeight="26.0" prefWidth="179.0" text="Save Image">
+            <Button fx:id="applyFilterButton" layoutX="879.0" layoutY="650.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#OnApplyFilterButtonClick" prefHeight="26.0" prefWidth="205.0" text="Apply Filter">
+               <VBox.margin>
+                  <Insets bottom="-75.0" left="15.0" right="15.0" />
+               </VBox.margin>
+            </Button>
+                <Button fx:id="saveImageButton" layoutX="879.0" layoutY="650.0" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#OnSaveImageButtonClick" prefHeight="26.0" prefWidth="189.0" text="Save Image">
                <VBox.margin>
                   <Insets bottom="40.0" left="15.0" right="15.0" top="80.0" />
                </VBox.margin>

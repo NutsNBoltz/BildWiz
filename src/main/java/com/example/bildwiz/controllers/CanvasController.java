@@ -41,6 +41,8 @@ public class CanvasController {
     @FXML
     private Button saveImageButton;
 
+    @FXML Button applyFilterButton;
+
     @FXML
     public StackPane imageContainer;
     @FXML
@@ -49,10 +51,12 @@ public class CanvasController {
     @FXML
     public ToggleButton selectionMode;
 
+    protected FilterController currentFilterController;
 
     public boolean isImageLoaded = false;
 
     public ArrayList<Image> imageVersions = new ArrayList<>();
+
 
     @FXML
     public void initialize() {
@@ -205,6 +209,15 @@ public class CanvasController {
     }
 
     @FXML
+    public void OnApplyFilterButtonClick() {
+        if (currentFilterController != null) {
+
+
+            currentFilterController.applyFilter();
+        }
+    }
+
+    @FXML
     public void OnBackButtonClick() throws IOException {
         Stage stage = (Stage) selectImageButton.getScene().getWindow();
 
@@ -235,6 +248,10 @@ public class CanvasController {
 
             try {
                 controller.getClass().getMethod("setParent", CanvasController.class).invoke(controller, this);
+
+                if (controller instanceof FilterController) {
+                    currentFilterController = (FilterController) controller;
+                }
 
             } catch (NoSuchMethodException ignored) {
                 System.out.println("nosuchmethod");

@@ -1,6 +1,7 @@
 package com.example.bildwiz.controllers.filters;
 
 import com.example.bildwiz.controllers.CanvasController;
+import com.example.bildwiz.controllers.FilterController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.embed.swing.SwingFXUtils;
@@ -11,7 +12,7 @@ import javafx.util.Duration;
 
 import java.awt.image.BufferedImage;
 
-public class BlurController extends  CanvasController {
+public class BlurController extends  CanvasController implements FilterController {
 
     private CanvasController canvas;
 
@@ -22,66 +23,67 @@ public class BlurController extends  CanvasController {
 
 
 
-    public BlurController() {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> {
-
-            Image image = canvas.selectedImage.getImage();
-
-            if (image != null) {
-
-   //             applyFilter(image);
-            }
-        }));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
-
-
-    }
 
 
 
-
-    public Image bufferedToFxImage(BufferedImage bufferedImage) {
-        return SwingFXUtils.toFXImage(bufferedImage, null);
-    }
+    public void applyFilter() {
 
 
+        Image image = canvas.selectedImage.getImage();
 
-    public Image applyFilter(Image image) {
+        BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
 
-        BufferedImage imgTemplate = SwingFXUtils.fromFXImage(image, null);
-
-        BufferedImage blurImage = new BufferedImage(imgTemplate.getWidth()-2,
-                imgTemplate.getHeight()-2,
-                BufferedImage.TYPE_BYTE_GRAY);
-
-        int pix = 0;
+        BufferedImage blurImage = new BufferedImage(bImage.getWidth()-2,
+                bImage.getHeight()-2,
+                BufferedImage.TYPE_INT_ARGB);
 
         for (int y = 0; y < blurImage.getHeight(); y++) {
             for (int x = 0; x < blurImage.getWidth(); x++) {
-                pix =
-                        (int) (4*(imgTemplate.getRGB(x+1, y+1) & 0xFF))
-                        + 2*(imgTemplate.getRGB(x+1, y)& 0xFF)
-                        + 2*(imgTemplate.getRGB(x+1, y+2)& 0xFF)
-                        + 2*(imgTemplate.getRGB(x, y+1)& 0xFF)
-                        + 2*(imgTemplate.getRGB(x+2, y+1)& 0xFF)
-                        + (imgTemplate.getRGB(x, y)& 0xFF)
-                        + (imgTemplate.getRGB(x+2, y)& 0xFF)
-                        + (imgTemplate.getRGB(x, y+2)& 0xFF)
-                        + (imgTemplate.getRGB(x+2, y+2)& 0xFF);
 
-                int p = (255<<24) | (pix<<16) | (pix<<8) | pix;
+                int sumR = 0, sumG = 0, sumB = 0;
 
-                blurImage.setRGB(x, y, p);
+                int[][] weight = {
+                        {1,2,1},
+                        {2,4,2},
+                        {1,2,1}
+                };
 
+                int maxWeight = 16;
+
+
+                for(int ky = 0; ky < 3; ky++) {
+                    for (int kx = 0; kx < 3; kx++) {
+                        int rgb = bImage.getRGB(x + kx, y + ky);
+
+                        int r = (rgb >> 16) & 0xff;
+                        int g = (rgb >> 8) & 0xff;
+                        int b = (rgb) & 0xff;
+
+                        int weightage = weight[ky][kx];
+
+                        sumR += r * weightage;
+                        sumG += g * weightage;
+                        sumB += b * weightage;
+
+                    }
+                }
+
+                int r = sumR / maxWeight;
+                int g = sumG / maxWeight;
+                int b = sumB / maxWeight;
+
+                int blurredRGB = (0xFF << 24) | (r << 16) | (g << 8) | b;
+
+                blurImage.setRGB(x, y, blurredRGB);
 
             }
         }
-
-        return bufferedToFxImage(blurImage);
+        canvas.selectedImage.setImage(SwingFXUtils.toFXImage(blurImage, null));
     }
 
     @FXML
     public void initialize() {
     }
+
+
 }
