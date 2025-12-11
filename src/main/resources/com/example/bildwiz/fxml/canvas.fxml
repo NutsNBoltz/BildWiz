@@ -18,7 +18,7 @@
     <top>
         <HBox fx:id="toolbar" prefHeight="45.0" spacing="10.0" style="-fx-background-color: red">
             <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" onAction="#OnBackButtonClick" text="Dashboard" />
-            <Button text="↺" />
+            <Button fx:id="undoButton" text="↺" onAction="#OnUndoButtonClick"  disable="true"/>
 
             <!--            <Button fx:id="selectImageButton" onAction="#OnSelectImageButtonClick" prefHeight="5.0" text="Select Image">-->
             <!--            <HBox.margin>-->

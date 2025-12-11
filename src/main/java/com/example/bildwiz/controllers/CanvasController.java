@@ -51,6 +51,9 @@ public class CanvasController {
     @FXML
     public ToggleButton selectionMode;
 
+    @FXML
+    private Button undoButton;
+
     protected FilterController currentFilterController;
 
     public boolean isImageLoaded = false;
@@ -214,6 +217,8 @@ public class CanvasController {
 
 
             currentFilterController.applyFilter();
+
+            imageVersions.add(selectedImage.getImage());
         }
     }
 
@@ -264,6 +269,15 @@ public class CanvasController {
     }
 
     @FXML
+    void OnUndoButtonClick() {
+        if (imageVersions.size() > 1) {
+            selectedImage.setImage(imageVersions.get(imageVersions.size() - 2));
+
+            imageVersions.remove(imageVersions.size() - 1);
+        }
+    }
+
+    @FXML
     AnchorPane initialControls;
     @FXML
     HBox toolbar;
@@ -276,8 +290,11 @@ public class CanvasController {
 
         HBox.setMargin(selectedImage, new Insets(0, 0, 0, 310.00));
 
-
         toolbar.setSpacing(10);
+
+        undoButton.setDisable(false);
+
+        imageVersions.add(selectedImage.getImage());
 
     }
 }
