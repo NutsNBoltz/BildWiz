@@ -65,7 +65,7 @@
                   <Insets left="15.0" top="10.0" />
                </VBox.margin>
             </RadioButton>
-                <VBox fx:id="rightPanel" layoutX="-114.0" layoutY="-54.0" prefHeight="555.0" prefWidth="214.0" style="-fx-background-color: green" AnchorPane.bottomAnchor="-30.0" AnchorPane.topAnchor="-54.0">
+                <VBox fx:id="rightPanel" layoutX="-114.0" layoutY="-54.0" maxHeight="-Infinity" prefHeight="600.0" prefWidth="214.0" style="-fx-background-color: green" AnchorPane.bottomAnchor="-30.0" AnchorPane.topAnchor="-54.0">
                <VBox.margin>
                   <Insets top="30.0" />
                </VBox.margin></VBox>
