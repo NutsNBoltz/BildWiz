@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -50,6 +51,9 @@ public class CanvasController {
 
     @FXML
     public ToggleButton selectionMode;
+    public Rectangle selectionRect = new Rectangle();
+
+
 
     @FXML
     private Button undoButton;
@@ -87,7 +91,6 @@ public class CanvasController {
         });
 
 
-        Rectangle selectionRect = new Rectangle();
         selectionRect.setStroke(Color.BLUE);
         selectionRect.setFill(Color.color(0, 0, 1, 0.2));
         selectionRect.setVisible(false);
