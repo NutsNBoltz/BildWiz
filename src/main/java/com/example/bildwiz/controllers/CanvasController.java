@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -51,7 +52,10 @@ public class CanvasController {
 
     @FXML
     public ToggleButton selectionMode;
+    @FXML
     public Rectangle selectionRect = new Rectangle();
+    private double anchorX;
+    private double anchorY;
 
 
 
@@ -68,41 +72,45 @@ public class CanvasController {
     @FXML
     public void initialize() {
 
+        selectionRect.setStroke(Color.BLUE);
+        selectionRect.setFill(Color.color(0, 0, 1, 0.2));
+        selectionRect.setVisible(false);
+
+        Group imageGroup = new Group(selectedImage, selectionRect);
+
+        // imageContainer comes from FXML (StackPane)
+        imageContainer.getChildren().add(imageGroup);
 
         imageContainer.layoutBoundsProperty().addListener((obs, old, bounds) -> {
-            Rectangle clip = new Rectangle(bounds.getWidth(), bounds.getHeight());
-            imageContainer.setClip(clip);
+            imageContainer.setClip(
+                    new Rectangle(bounds.getWidth(), bounds.getHeight())
+            );
         });
 
         imageURL.textProperty().addListener((obs, oldVal, newVal) -> {
             LoadImageFromURL(newVal, selectedImage);
         });
 
+        imageContainer.setOnScroll(event -> {
+            double zoom = event.getDeltaY() > 0 ? 1.05 : 1 / 1.05;
 
-        selectedImage.setOnScroll(event -> {
-            double zoom = 1.05;
-
-            if (event.getDeltaY() < 0) {
-                zoom = 1 / zoom;
-            }
-
-            selectedImage.setScaleX(selectedImage.getScaleX() * zoom);
-            selectedImage.setScaleY(selectedImage.getScaleY() * zoom);
+            imageGroup.setScaleX(imageGroup.getScaleX() * zoom);
+            imageGroup.setScaleY(imageGroup.getScaleY() * zoom);
         });
 
-
-        selectionRect.setStroke(Color.BLUE);
-        selectionRect.setFill(Color.color(0, 0, 1, 0.2));
-        selectionRect.setVisible(false);
-        imageContainer.getChildren().add(selectionRect);
-
-
         final double[] dragDelta = new double[2];
-        selectedImage.setOnMousePressed(e -> {
+        final double[] anchor = new double[2];
+
+        imageContainer.setOnMousePressed(e -> {
+
+            Point2D p = imageGroup.sceneToLocal(e.getSceneX(), e.getSceneY());
 
             if (selectionMode.isSelected()) {
-                selectionRect.setTranslateX(e.getX());
-                selectionRect.setTranslateY(e.getY());
+                anchor[0] = p.getX();
+                anchor[1] = p.getY();
+
+                selectionRect.setX(anchor[0]);
+                selectionRect.setY(anchor[1]);
                 selectionRect.setWidth(0);
                 selectionRect.setHeight(0);
                 selectionRect.setVisible(true);
@@ -110,35 +118,37 @@ public class CanvasController {
                 dragDelta[0] = e.getSceneX();
                 dragDelta[1] = e.getSceneY();
             }
-
-
         });
 
+        imageContainer.setOnMouseDragged(e -> {
 
-        selectedImage.setOnMouseDragged(e -> {
+            Point2D p = imageGroup.sceneToLocal(e.getSceneX(), e.getSceneY());
 
             if (selectionMode.isSelected()) {
-                double width = e.getX() - selectionRect.getX();
-                double height = e.getY() - selectionRect.getY();
 
-                selectionRect.setWidth(Math.abs(width));
-                selectionRect.setHeight(Math.abs(height));
-                selectionRect.setX(width < 0 ? e.getX() : selectionRect.getX());
-                selectionRect.setY(height < 0 ? e.getY() : selectionRect.getY());
+                double x = Math.min(anchor[0], p.getX());
+                double y = Math.min(anchor[1], p.getY());
+                double w = Math.abs(p.getX() - anchor[0]);
+                double h = Math.abs(p.getY() - anchor[1]);
+
+                selectionRect.setX(x);
+                selectionRect.setY(y);
+                selectionRect.setWidth(w);
+                selectionRect.setHeight(h);
+
             } else {
                 double dx = e.getSceneX() - dragDelta[0];
                 double dy = e.getSceneY() - dragDelta[1];
 
-                selectedImage.setTranslateX(selectedImage.getTranslateX() + dx);
-                selectedImage.setTranslateY(selectedImage.getTranslateY() + dy);
+                imageGroup.setTranslateX(imageGroup.getTranslateX() + dx);
+                imageGroup.setTranslateY(imageGroup.getTranslateY() + dy);
 
                 dragDelta[0] = e.getSceneX();
                 dragDelta[1] = e.getSceneY();
             }
         });
-
-
     }
+
 
 
     private void LoadImageFromURL(String urlString, ImageView imageView) {
