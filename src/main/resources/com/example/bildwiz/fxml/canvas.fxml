@@ -60,7 +60,7 @@
                   <Insets left="60.0" right="60.0" top="25.0" />
                </VBox.margin>
             </ToggleButton>
-            <RadioButton mnemonicParsing="false" text="Exclude">
+            <RadioButton fx:id="exclusionMode" mnemonicParsing="false" text="Exclude">
                <VBox.margin>
                   <Insets left="15.0" top="10.0" />
                </VBox.margin>

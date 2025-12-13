@@ -11,6 +11,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.GaussianBlur;
@@ -52,10 +53,11 @@ public class CanvasController {
 
     @FXML
     public ToggleButton selectionMode;
+    public RadioButton exclusionMode;
+
     @FXML
     public Rectangle selectionRect = new Rectangle();
-    private double anchorX;
-    private double anchorY;
+
 
 
 
@@ -77,6 +79,8 @@ public class CanvasController {
         selectionRect.setVisible(false);
 
         Group imageGroup = new Group(selectedImage, selectionRect);
+
+        exclusionMode.setSelected(false);
 
         // imageContainer comes from FXML (StackPane)
         imageContainer.getChildren().add(imageGroup);
@@ -145,6 +149,15 @@ public class CanvasController {
 
                 dragDelta[0] = e.getSceneX();
                 dragDelta[1] = e.getSceneY();
+            }
+        });
+
+        imageContainer.setOnMouseReleased(e -> {
+            if (selectionMode.isSelected()) {
+                System.out.println(selectionRect.getX());
+                System.out.println(selectionRect.getY());
+                System.out.println(selectionRect.getWidth());
+                System.out.println(selectionRect.getHeight());
             }
         });
     }
@@ -227,8 +240,6 @@ public class CanvasController {
     @FXML
     public void OnApplyFilterButtonClick() {
         if (currentFilterController != null) {
-
-
             currentFilterController.applyFilter();
 
             imageVersions.add(selectedImage.getImage());
