@@ -2,6 +2,7 @@ package com.example.bildwiz.controllers;
 
 import com.example.bildwiz.Main;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -17,6 +18,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -96,11 +98,22 @@ public class CanvasController {
         });
 
         imageContainer.setOnScroll(event -> {
-            double zoom = event.getDeltaY() > 0 ? 1.05 : 1 / 1.05;
+
+            double deltaY = event.getDeltaY();
+
+            if (0 == deltaY) {
+                return;
+            }
+
+            double zoom = deltaY > 0 ? 1.05 : 1 / 1.05;
+
 
             imageGroup.setScaleX(imageGroup.getScaleX() * zoom);
             imageGroup.setScaleY(imageGroup.getScaleY() * zoom);
+
         });
+
+
 
         final double[] dragDelta = new double[2];
         final double[] anchor = new double[2];
