@@ -20,9 +20,13 @@ import javafx.util.Duration;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.security.PrivateKey;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public class BlurController extends  CanvasController implements FilterController {
 
@@ -78,17 +82,21 @@ public class BlurController extends  CanvasController implements FilterControlle
     }
 
     private BufferedImage blurOnce(BufferedImage image) {
+
+
+        DataBufferInt buffer = (DataBufferInt) image.getRaster().getDataBuffer();
+        int[] pixels = buffer.getData();
+
         int width = image.getWidth();
         int height = image.getHeight();
-        BufferedImage output = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage output;
 
-        int[][] weight = {
-                {1, 2, 1},
-                {2, 4, 2},
-                {1, 2, 1}
-        };
+        int[] flatWeight = {1, 2, 1, 2, 4, 2, 1, 2, 1};
 
-        for (int y = 0; y < height; y++) {
+        int[] outputArray = new int[height * width];
+
+
+        IntStream.range(0, height).parallel().forEach( y -> {
             for (int x = 0; x < width; x++) {
 
                 int sumR = 0, sumG = 0, sumB = 0;
@@ -101,12 +109,12 @@ public class BlurController extends  CanvasController implements FilterControlle
 
                         // check bounds for edges
                         if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
-                            int rgb = image.getRGB(nx, ny);
+                            int rgb = pixels[ny * width + nx];
                             int r = (rgb >> 16) & 0xff;
                             int g = (rgb >> 8) & 0xff;
                             int b = rgb & 0xff;
 
-                            int w = weight[ky + 1][kx + 1];
+                            int w = flatWeight[(ky + 1) * 3 + (kx + 1)];
 
                             sumR += r * w;
                             sumG += g * w;
@@ -121,12 +129,14 @@ public class BlurController extends  CanvasController implements FilterControlle
                 int b = sumB / weightSum;
 
                 int blurredRGB = (0xFF << 24) | (r << 16) | (g << 8) | b;
-                output.setRGB(x, y, blurredRGB);
+
+                outputArray[y * width + x] = blurredRGB;
             }
-        }
 
+        });
+
+        output = arrayToBuffered(outputArray, width, height);
         return output;
-
     }
 
 

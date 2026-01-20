@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
+import java.awt.image.*;
 
 public interface FilterController{
     void applyFilter();
@@ -76,5 +76,14 @@ public interface FilterController{
         return copy;
     }
 
+
+   public default BufferedImage arrayToBuffered(int[] pixels, int width, int height) {
+
+       BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+       image.setRGB(0,0, width, height, pixels, 0, width);
+
+       return image;
+   }
 
 }
