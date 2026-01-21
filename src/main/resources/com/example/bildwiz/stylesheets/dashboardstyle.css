@@ -1,0 +1,15 @@
+.cardsContainer {
+    -fx-background-color: yellow;
+    -fx-padding: 5;
+    -fx-hgap: 15;
+    -fx-vgap: 15;
+
+}
+
+.card {
+    -fx-background-color: blue;
+    -fx-border-color: orange;
+    -fx-border-width: 15;
+
+}
+

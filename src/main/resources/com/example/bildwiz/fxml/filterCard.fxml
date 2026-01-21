@@ -6,17 +6,20 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import java.net.URL?>
 <fx:root type="StackPane" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
 
-    <StackPane style="-fx-background-color: #ffffff;">
+    <stylesheets>
+        <URL value="@../stylesheets/dashboardstyle.css" />
+    </stylesheets>
 
-        <VBox alignment="CENTER" spacing="15">
-            <ImageView fx:id="imageView" fitHeight="120" fitWidth="120" preserveRatio="true">
-            <VBox.margin>
-               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-            </VBox.margin></ImageView>
-            <Label fx:id="filterName" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
-            <Label fx:id="filterDescription" style="-fx-font-size: 12px;" wrapText="true" />
+    <StackPane styleClass="card">
+
+
+        <VBox alignment="CENTER">
+            <ImageView fx:id="imageView" fitHeight="120" fitWidth="120" preserveRatio="true" />
+            <Label fx:id="filterName" />
+            <Label fx:id="filterDescription" />
         </VBox>
 
     </StackPane>
