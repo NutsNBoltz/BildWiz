@@ -17,9 +17,9 @@
 
 
         <VBox alignment="CENTER">
-            <ImageView fx:id="imageView" fitHeight="120" fitWidth="120" preserveRatio="true" />
-            <Label fx:id="filterName" />
-            <Label fx:id="filterDescription" />
+            <ImageView fx:id="imageView" styleClass="card-icon" fitHeight="64" fitWidth="64" />
+            <Label fx:id="filterName" visible="false" />
+            <Label fx:id="filterDescription" managed="false" visible="false" />
         </VBox>
 
     </StackPane>

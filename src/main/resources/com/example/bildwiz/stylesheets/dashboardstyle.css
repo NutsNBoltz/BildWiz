@@ -1,15 +1,24 @@
 .cardsContainer {
-    -fx-background-color: yellow;
-    -fx-padding: 5;
+    -fx-background-color: lightgrey;
+    -fx-padding: 15;
     -fx-hgap: 15;
     -fx-vgap: 15;
 
 }
 
 .card {
-    -fx-background-color: blue;
-    -fx-border-color: orange;
-    -fx-border-width: 15;
+    -fx-border-width: 2;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 5;
+}
+
+.card-icon {
 
 }
 
+.card:hover {
+    -fx-background-color: #5e5c6487;
+    -fx-border-color: #3d384687;
+    -fx-cursor: hand;
+}

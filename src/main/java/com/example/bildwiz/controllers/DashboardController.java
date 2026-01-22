@@ -26,59 +26,59 @@ public class DashboardController {
 
     Card card1 = new Card("Monochrome",
             "A filter, which transforms your colorful image to Black & White",
-            "blackAndWhite.jpeg",
+            "tbd.png",
             "grayscale.fxml");
 
     Card card12 = new Card("Blur",
             "A filter, which will blur the image",
-            "blackAndWhite.jpeg",
+            "blur.png",
             "blur.fxml");
 
     Card card2 = new Card(
             "Pop Art Filter",
             "A filter which transforms your picture pop art filter",
-            "blackAndWhite.jpeg",
+            "tbd.png",
             "popArt.fxml");
 
     Card card3 = new Card(
             "ASCII",
             "A Filter which transforms your image into ASCII Art",
-            "blackAndWhite.jpeg",
+            "tbd.png",
             "ascii.fxml"
     );
 
     Card card4 = new Card(
             "Photomosaic",
             "A Filter which transforms your image into tiles of other smaller images",
-            "blackAndWhite.jpeg",
+            "tbd.png",
             "photomosaic.fxml"
     );
 
     Card card5 = new Card(
             "Voronoi",
             "A filter which applies the Voronoi effect to the image",
-            "blackAndWhite.jpeg",
+            "tbd.png",
             "voronoi.fxml"
     );
 
     Card card6 = new Card(
             "Dithering",
             "A Filter which transforms your image into ASCII Art",
-            "blackAndWhite.jpeg",
+            "tbd.png",
             "dithering.fxml"
     );
 
     Card card7 = new Card(
             "ASCII",
             "A Filter which transforms your image into ASCII Art",
-            "blackAndWhite.jpeg",
+            "tbd.png",
             "ascii.fxml"
     );
 
     Card card8 = new Card(
             "Testing",
             "Testing Canvas, to make sure it is functioning as intended.",
-            "blackAndWhite.jpeg",
+            "tbd.png",
             "canvas.fxml"
     );
 
@@ -132,21 +132,19 @@ public class DashboardController {
 
             Image image = new Image(getClass().getResourceAsStream("/com/example/bildwiz/images/" + imagePath));
             imageView.setImage(image);
-
+imageView.setSmooth(false);
 
             this.setOnMouseEntered(e ->{
-                this.setScaleX(1.15);
-                this.setScaleY(1.15);
-                FadeTransition fadeOut = new FadeTransition(Duration.millis(200), filterDescription);
+                filterName.setVisible(true);
+                FadeTransition fadeOut = new FadeTransition(Duration.millis(500), filterDescription);
                 fadeOut.setToValue(1);
                 fadeOut.play();
             });
 
 
             this.setOnMouseExited(e -> {
-                this.setScaleX(1);
-                this.setScaleY(1);
-                FadeTransition fadeOut = new FadeTransition(Duration.millis(200), filterDescription);
+                filterName.setVisible(false);
+                FadeTransition fadeOut = new FadeTransition(Duration.millis(500), filterDescription);
                 fadeOut.setToValue(0);
                 fadeOut.play();
             });
